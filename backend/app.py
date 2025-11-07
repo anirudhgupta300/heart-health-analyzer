@@ -14,20 +14,20 @@ model = joblib.load("heart_model.pkl")
 def Make_prediction():
     data = request.json
     cetagories = [999, 
-                data['Age'],
-                data['Sex'],
+                data['age'],
+                data['sex'],
                 1,
-                data['Cp'],
-                data['Trestbps'],
-                data['Chol'],
-                data['Fbs'],
-                data['Restecg'],
-                data['Thalach'],
-                data['Exang'],
-                data['Oldpeak'],
+                data['cp'],
+                data['trestbps'],
+                data['chol'],
+                data['fbs'],
+                data['restecg'],
+                data['thalch'],
+                data['exang'],
+                data['oldpeak'],
                 data['slope'],
-                data['Ca'],
-                data['Thal']]
+                data['ca'],
+                data['thal']]
     prediction = model.predict([cetagories])
     probability = model.predict_proba([cetagories])#always return a 2D array
     return jsonify({
