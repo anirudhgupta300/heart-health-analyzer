@@ -1,13 +1,13 @@
 "use client"; 
 import { Heart, Activity, Shield, BarChart, Clock, ChevronRight, Sparkles } from 'lucide-react';
-import Patientform from "@/components/search";
-import { patient_data } from "@/action/action";
+
 import { useRouter } from 'next/navigation';
 export default function Home() {
   const router = useRouter();
   const handleFormSubmit =()=> {
 
-    router.push('/result');
+    router.push(`/search`);
+
     };
     
 

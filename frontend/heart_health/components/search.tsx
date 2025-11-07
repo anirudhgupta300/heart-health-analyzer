@@ -4,7 +4,7 @@ import { useState } from "react";
 import { patient_data, Heart_healthApi } from "@/action/action";
 import { Heart, User, Activity, Thermometer, Droplet, Zap } from "lucide-react";
 
-interface PatientformProps {
+export interface PatientformProps {
   onSubmit: (data: patient_data) => void;
 }
 export default function Patientform({ onSubmit }: PatientformProps) {
