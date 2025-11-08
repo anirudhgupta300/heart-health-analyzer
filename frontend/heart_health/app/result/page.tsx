@@ -1,8 +1,10 @@
-'use client'
+'use client';
+import { Suspense } from 'react';
 import { Heart, AlertCircle, CheckCircle, Info, TrendingUp, Shield } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
-export default function Result() {
+// Create a separate component for the content that uses useSearchParams
+function ResultContent() {
   const searchParams = useSearchParams();
   const score = searchParams.get('score'); // This is 0 or 1
   const risk = searchParams.get('risk');   // This is percentage (e.g., 85.5)
@@ -194,6 +196,7 @@ export default function Result() {
   );
 }
 
+// Keep InfoCard outside the Suspense since it doesn't use useSearchParams
 function InfoCard({ icon, title, description, color }: {
   icon: React.ReactNode;
   title: string;
@@ -208,5 +211,21 @@ function InfoCard({ icon, title, description, color }: {
       <h3 className="font-semibold text-gray-900 mb-1">{title}</h3>
       <p className="text-sm text-gray-600">{description}</p>
     </div>
+  );
+}
+
+// Main component with Suspense boundary
+export default function Result() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+        <div className="text-center">
+          <Heart className="w-16 h-16 text-blue-600 animate-pulse mx-auto mb-4" />
+          <p className="text-gray-600">Loading results...</p>
+        </div>
+      </div>
+    }>
+      <ResultContent />
+    </Suspense>
   );
 }
