@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
-
+import os
 # give Flask an idea of what belongs to your application
 app = Flask(__name__)
 #Cross-Origin Resource Sharing Lets the API talk to browser without blocking
@@ -34,7 +34,12 @@ def Make_prediction():
         'prediction': int(prediction[0]),
         'risk_percentage': probability[0][1] * 100
     })
+# to let the service know that the api is healthy and working 
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({'status': 'healthy', 'message': 'Heart Health API is running'})
 
+# ADD THIS for Render deployment
 if __name__ == '__main__':
-    app.run(debug=True)
-    
+    port = int(os.environ.get('PORT', 10000))  # ← Render provides PORT automatically
+    app.run(host='0.0.0.0', port=port)  # ← Change this line
