@@ -1,5 +1,6 @@
 
 // this page to get the values for the parameter
+'use client'
 import { useState } from "react";
 import { patient_data, Heart_healthApi } from "@/action/action";
 import { Heart, User, Activity, Thermometer, Droplet, Zap } from "lucide-react";

@@ -214,7 +214,7 @@ function InfoCard({ icon, title, description, color }: {
   );
 }
 
-// Main component with Suspense boundary
+
 export default function Result() {
   return (
     <Suspense fallback={
