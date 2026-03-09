@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
+from flask_pymongo import Pymongo
 from flask_cors import CORS
+from flask_login import LoginManager
 import joblib
 import os
 # give Flask an idea of what belongs to your application
@@ -39,7 +41,7 @@ def Make_prediction():
 def health_check():
     return jsonify({'status': 'healthy', 'message': 'Heart Health API is running'})
 
-# ADD THIS for Render deployment
+#  for Render deployment
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 10000))  # ← Render provides PORT automatically
-    app.run(host='0.0.0.0', port=port)  # ← Change this line
+    port = int(os.environ.get('PORT', 10000))  
+    app.run(host='0.0.0.0', port=port)  
