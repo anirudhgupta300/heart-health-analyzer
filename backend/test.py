@@ -1,10 +1,20 @@
 import requests
 
 data = {
-    "Age": 55, "Sex": 1, "Cp": 3, "Trestbps": 160,
-    "Chol": 280, "Fbs": 1, "Restecg": 2, "Thalach": 145,
-    "Exang": 1, "Oldpeak": 2.5, "slope": 2, "Ca": 2, "Thal": 3
+    "age": 55,
+    "sex": 1,
+    "cp": 3,
+    "trestbps": 160,
+    "chol": 280,
+    "fbs": 1,
+    "restecg": 2,
+    "thalch": 145,
+    "exang": 1,
+    "oldpeak": 2.5,
+    "slope": 2,
+    "ca": 2,
+    "thal": 3
 }
 
-response = requests.post('http://localhost:5000/api/predict', json=data)
+response = requests.post('http://localhost:10000/api/predict/', json=data)
 print(response.json())

@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
-from flask_pymongo import Pymongo
+
 from flask_cors import CORS
-from flask_login import LoginManager
+
 import joblib
 import os
 # give Flask an idea of what belongs to your application

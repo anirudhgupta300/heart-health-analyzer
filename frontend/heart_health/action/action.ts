@@ -21,7 +21,7 @@ export interface patient_result{
     risk_percentage: number
 }
 export async function Heart_healthApi(patient_data:patient_data){
-    const response = await fetch('https://heart-health-analyzer-qrsg.onrender.com/api/predict/', {
+    const response = await fetch('https://heart-health-backend.onrender.com/api/predict/', {
         method : 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(patient_data)
