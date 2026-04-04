@@ -1,34 +1,56 @@
 'use server'
-export interface patient_data{
-    id: number//set to 999
-    age:number
+
+export interface patient_data {
+    id: number
+    age: number
     sex: number
-    dataset: number //set to 1
-    cp:number // chest pain
-    trestbps:number
-    chol:number
-    fbs:number
-    restecg:number
-    thalch:number
-    exang:number
-    oldpeak:number
-    slope:number
-    ca:number
-    thal:number
+    dataset: number
+    cp: number
+    trestbps: number
+    chol: number
+    fbs: number
+    restecg: number
+    thalch: number
+    exang: number
+    oldpeak: number
+    slope: number
+    ca: number
+    thal: number
 }
-export interface patient_result{
+
+export interface patient_result {
     prediction: number
     risk_percentage: number
 }
-export async function Heart_healthApi(patient_data:patient_data){
-    const response = await fetch('https://heart-health-backend.onrender.com/api/predict/', {
-        method : 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(patient_data)
-    } );
-    if(!response.ok){
-        throw new Error(`HTTP error! status: ${response.status}`);
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'https://heart-health-backend.onrender.com';
+
+export async function Heart_healthApi(data: patient_data): Promise<patient_result> {
+    let response: Response;
+    try {
+        response = await fetch(`${API_URL}/api/predict/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+    } catch {
+        throw new Error('Unable to reach the server. Please check your connection.');
     }
-    const data:patient_result = await response.json();
-    return data;
+
+    if (!response.ok) {
+        let detail = `Server error (${response.status})`;
+        try {
+            const body = await response.json();
+            if (body?.error) detail = body.error;
+            if (body?.details && typeof body.details === 'object') {
+                const fieldErrors = Object.entries(body.details)
+                    .map(([k, v]) => `${k}: ${v}`)
+                    .join(', ');
+                detail += ` — ${fieldErrors}`;
+            }
+        } catch { /* ignore parse errors */ }
+        throw new Error(detail);
+    }
+
+    return response.json() as Promise<patient_result>;
 }

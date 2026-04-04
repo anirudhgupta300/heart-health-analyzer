@@ -1,42 +1,33 @@
-#to load and work with data set
+import os
 import pandas as pd
 
-def load_clean_data():
-    #Step1: load the dataset
-    df = pd.read_csv("HeartDisease.csv")
-    
+CSV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "HeartDisease.csv")
 
-    #gathering all the bad data 
-    df_bad = df[
-        (df['trestbps']<50)|
-        (df['trestbps'].isna())|
-        (df['chol']<50)|
+def load_clean_data():
+    if not os.path.exists(CSV_PATH):
+        raise FileNotFoundError(f"Dataset not found at {CSV_PATH}")
+
+    df = pd.read_csv(CSV_PATH)
+
+    bad_rows = df[
+        (df['trestbps'] < 50) |
+        (df['trestbps'].isna()) |
+        (df['chol'] < 50) |
         (df['chol'].isna())
     ].index
-    #dropting it
-    df_clean = df.drop(df_bad)
-    #make a new column target and put 1,0 depending on true and false
+
+    df_clean = df.drop(bad_rows)
+    df_clean = df_clean.copy()
     df_clean['target'] = (df_clean['num'] > 0).astype(int)
-    df = df_clean
-    return df
-#this main will only execute if this file is execute directly
+    return df_clean
+
+
 if __name__ == "__main__":
-    #checking data first 2 rows st pracrice
     df = load_clean_data()
     print(df.head(2))
-
-    #checking all the data type in the dataset
     print("\nDataset info:")
     print(df.info())
-
-    #statistical summary
-    #cout: to check if missing some data when cout<total rows
-    #mean; Average
     print("\nStatistical summary:")
     print(df.describe())
-
-    #found some impossible(bad) data
     zero_bp_count = (df['trestbps'] == 0).sum()
     print(f"Patients with 0 blood pressure: {zero_bp_count}")
-    print(df[df['trestbps'] == 0])
-    # HERE WE ARE DONE CLEANING THE DATASET
