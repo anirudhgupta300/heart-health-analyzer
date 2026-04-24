@@ -157,4 +157,4 @@ UCI Heart Disease Dataset — combined from Cleveland, Hungary, Switzerland, and
 ## Author
 
 **Anirudh Gupta** — CS @ University of Illinois Chicago  
-[LinkedIn](https://linkedin.com/in/anirudhgupta) · [GitHub](https://github.com/anirudhgupta)
+[LinkedIn](www.linkedin.com/in/anirudh-gupta-9358632a4) 
